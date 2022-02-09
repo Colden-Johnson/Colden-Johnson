@@ -1,0 +1,343 @@
+import sys
+
+game_board = ["_", "_", "_", "_", "_", "_", "_", "_", "_"]
+game_over = False
+main_program_loop = True
+winner_name = "X"
+win_count_x = 0
+win_count_o = 0
+empty = None
+
+
+def display_board():
+    print(game_board[0] + " | " + game_board[1] + " | " + game_board[2])
+    print(game_board[3] + " | " + game_board[4] + " | " + game_board[5])
+    print(game_board[6] + " | " + game_board[7] + " | " + game_board[8])
+
+
+def check_win():
+    global game_over
+    if check_win_column():
+        display_board()
+        print("Player " + winner_name + " wins!")
+        game_over = True
+    elif check_win_row():
+        display_board()
+        print("Player " + winner_name + " wins!")
+        game_over = True
+    elif check_win_diagonal():
+        display_board()
+        print("Player " + winner_name + " wins!")
+        game_over = True
+    elif check_board_spaces():
+        display_board()
+        print("Tie Game!")
+        game_over = True
+    else:
+        print("Keep Playing!")
+
+
+def check_board_spaces():
+    if (game_board[0] == "_" or game_board[1] == "_" or game_board[2] == "_" or game_board[3] == "_" or
+            game_board[4] == "_" or game_board[5] == "_" or game_board[6] == "_" or game_board[7] == "_" or
+            game_board[8] == "_"):
+        return False
+    else:
+        return True
+
+
+def check_win_column():
+    global winner_name
+    global win_count_x
+    global win_count_o
+    if game_board[0] == "X" and game_board[3] == "X" and game_board[6] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[1] == "X" and game_board[4] == "X" and game_board[7] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[2] == "X" and game_board[5] == "X" and game_board[8] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[0] == "O" and game_board[3] == "O" and game_board[6] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    elif game_board[1] == "O" and game_board[4] == "O" and game_board[7] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    elif game_board[2] == "O" and game_board[5] == "O" and game_board[8] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    else:
+        return False
+
+
+def check_win_row():
+    global winner_name
+    global win_count_x
+    global win_count_o
+    if game_board[0] == "X" and game_board[1] == "X" and game_board[2] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[3] == "X" and game_board[4] == "X" and game_board[5] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[6] == "X" and game_board[7] == "X" and game_board[8] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[0] == "O" and game_board[1] == "O" and game_board[2] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    elif game_board[3] == "O" and game_board[4] == "O" and game_board[5] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    elif game_board[6] == "O" and game_board[7] == "O" and game_board[8] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    else:
+        return False
+
+
+def check_win_diagonal():
+    global winner_name
+    global win_count_x
+    global win_count_o
+    if game_board[0] == "X" and game_board[4] == "X" and game_board[8] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[2] == "X" and game_board[4] == "X" and game_board[6] == "X":
+        win_count_x = win_count_x + 1
+        return True
+    elif game_board[0] == "O" and game_board[4] == "O" and game_board[8] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    elif game_board[2] == "O" and game_board[4] == "O" and game_board[6] == "O":
+        win_count_o = win_count_o + 1
+        winner_name = "O"
+        return True
+    else:
+        return False
+
+
+def update_board(turn_number):
+    if turn_number % 2 == 0:
+        print("Player X, make a move!")
+        while True:
+            try:
+                position = int(input("Select a square 1-9: "))
+            except ValueError:
+                print("Invalid, try again.")
+                continue
+            if position > 9 or position < 0:
+                print("Invalid, try again.")
+                continue
+            else:
+                break
+        position = int(position) - 1
+        if game_board[position] == "_":
+            game_board[position] = "X"
+        else:
+            print("Square already occupied, make another move.")
+            update_board(turn_number)
+    elif turn_number % 2 == 1:
+        print("Player O, make a move!")
+        while True:
+            try:
+                position = int(input("Select a square 1-9: "))
+            except ValueError:
+                print("Invalid, try again.")
+                continue
+            if position > 9 or position < 1:
+                print("Invalid, try again.")
+                continue
+            else:
+                break
+        position = int(position) - 1
+        if game_board[position] == "_":
+            game_board[position] = "O"
+        else:
+            print("Square already occupied, make another move.")
+            update_board(turn_number)
+
+
+def return_score():
+    print("Total wins player X: " + str(win_count_x))
+    print("Total wins player Y: " + str(win_count_o))
+    if win_count_x > win_count_o:
+        print("Player X is in the lead!")
+    elif win_count_x < win_count_o:
+        print("Player Y is in the lead!")
+    else:
+        print("Tie game!")
+
+
+def ai_takes_turn():
+    if not ai_check_win():
+        game_board[find_empty()] = "X"
+    display_board()
+
+
+def find_empty():
+    global empty
+    for x in range(8):
+        if game_board[x] == "_":
+            empty = x
+            return empty
+
+
+def ai_check_win():
+    current_player = "X"
+    if ai_check_column(current_player):
+        game_board[empty] = "X"
+        return True
+    elif ai_check_row(current_player):
+        game_board[empty] = "X"
+        return True
+    elif ai_check_diagonal(current_player):
+        game_board[empty] = "X"
+        return True
+    elif ai_check_column("O"):
+        game_board[empty] = "X"
+        return True
+    elif ai_check_row("O"):
+        game_board[empty] = "X"
+        return True
+    elif ai_check_diagonal("O"):
+        game_board[empty] = "X"
+        return True
+    else:
+        return False
+
+
+def ai_check_row(current_check):
+    # checks if a row is close to being completed
+    global empty
+    for x in range(3):
+        if game_board[x] == current_check and game_board[x + 3] == current_check and game_board[x + 6] == "_":
+            empty = x + 6
+            return True
+        if game_board[x] == current_check and game_board[x + 3] == "_" and game_board[x + 6] == current_check:
+            empty = x + 3
+            return True
+        if game_board[x] == "_" and game_board[x + 3] == current_check and game_board[x + 6] == current_check:
+            empty = x
+            return True
+
+
+def ai_check_column(current_check):
+    # checks if a column is close to being completed
+    global empty
+    for x in range(3):
+        if game_board[x] == current_check and game_board[x + 1] == current_check and game_board[x + 2] == "_":
+            empty = x + 2
+            return True
+        if game_board[x] == current_check and game_board[x + 1] == "_" and game_board[x + 2] == current_check:
+            empty = x + 1
+            return True
+        if game_board[x] == "_" and game_board[x + 1] == current_check and game_board[x + 2] == current_check:
+            empty = x
+            return True
+
+
+def ai_check_diagonal(current_check):
+    # checks if a diagonal is close to being completed
+    global empty
+    if game_board[0] == current_check and game_board[4] == current_check and game_board[8] == "_":
+        empty = 8
+        return True
+    if game_board[0] == current_check and game_board[4] == "_" and game_board[8] == current_check:
+        empty = 4
+        return True
+    if game_board[0] == "_" and game_board[4] == current_check and game_board[8] == current_check:
+        empty = 0
+        return True
+    if game_board[2] == current_check and game_board[4] == current_check and game_board[6] == "_":
+        empty = 6
+        return True
+    if game_board[2] == current_check and game_board[4] == "_" and game_board[6] == current_check:
+        empty = 4
+        return True
+    if game_board[2] == "_" and game_board[4] == current_check and game_board[6] == current_check:
+        empty = 2
+        return True
+
+
+def single_player():
+    # need to make it loop
+    # need to check for win
+    turn_number = 1
+    print("Great, I will start the game.")
+    game_board[4] = "X"
+    display_board()
+    update_board(turn_number)
+    display_board()
+    print("")
+    if game_board[8] == "_":
+        game_board[8] = "X"
+    else:
+        game_board[0] = "X"
+    display_board()
+    while not game_over:
+        update_board(turn_number)
+        check_win()
+        display_board()
+        print("")
+        ai_takes_turn()
+        check_win()
+
+
+def two_player():
+    turn_number = 0
+    while not game_over:
+        display_board()
+        update_board(turn_number)
+        check_win()
+        turn_number = turn_number + 1
+
+
+def play_game():
+    global game_board
+    global game_over
+    global winner_name
+    program_loop = True
+    while program_loop:
+        multi_player = input("Do you have a friend to play with? (yes/no) ")
+        if multi_player == "yes":
+            program_loop = False
+            two_player()
+        elif multi_player == "no":
+            program_loop = False
+            single_player()
+        else:
+            print("Invalid response. Try again.")
+    program_loop = True
+    while program_loop:
+        play_again = input("Game over. Play again? (yes/no) ")
+        if play_again == "yes":
+            game_board = ["_", "_", "_", "_", "_", "_", "_", "_", "_"]
+            game_over = False
+            winner_name = "X"
+            return_score()
+            if multi_player == "yes":
+                two_player()
+            elif multi_player == "no":
+                single_player()
+        elif play_again == "no":
+            return_score()
+            program_loop = False
+        else:
+            print("Invalid response. Try again.")
+
+
+print("This program lets you play tic-tac-toe either with a friend or against an AI. Enjoy!")
+print("")
+play_game()
+
+sys.exit()
