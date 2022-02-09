@@ -4,6 +4,6 @@
 
 -I've taken 1 year each of JavaScript and RStudio, and I'm currently focusing on completing some baseline projects in Python
 
--I haven't uploaded a lot of my previous work to GitHub, but I'm hoping to show better documentation and look for collaboration! 
+-I haven't uploaded a lot of my previous work to GitHub, but I'm hoping to keep better documentation from now on! 
 
 
