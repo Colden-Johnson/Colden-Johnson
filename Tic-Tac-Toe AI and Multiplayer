@@ -1,5 +1,7 @@
 import sys
 
+# Goal: to improve my understanding of nested functions, arrays, and advanced loops.
+
 game_board = ["_", "_", "_", "_", "_", "_", "_", "_", "_"]
 game_over = False
 main_program_loop = True
@@ -270,8 +272,6 @@ def ai_check_diagonal(current_check):
 
 
 def single_player():
-    # need to make it loop
-    # need to check for win
     turn_number = 1
     print("Great, I will start the game.")
     game_board[4] = "X"
