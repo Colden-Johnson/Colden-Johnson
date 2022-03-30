@@ -1,0 +1,82 @@
+# rock-paper-scissors
+import random
+global ai_score
+ai_score = 0
+global player_score
+player_score = 0
+
+
+def play_game():
+    global ai_score
+    global player_score
+    global ai_choice
+    global player_choice
+    global program_loop
+    ai_choice = random.randint(1, 3)
+    player_choice_loop = True
+    while player_choice_loop:
+        player_choice_string = input("Rock, paper, or scissors? ")
+        if player_choice_string == "rock":
+            player_choice = 1
+            player_choice_loop = False
+        elif player_choice_string == "paper":
+            player_choice = 2
+            player_choice_loop = False
+        elif player_choice_string == "scissors":
+            player_choice = 3
+            player_choice_loop = False
+        elif player_choice_string == "0":
+            print("Game over")
+            program_loop = False
+            quit()
+        else:
+            print("Invalid input, select rock, paper, or scissors. ")
+    print("AI chose " + convert_choice_to_string(ai_choice))
+    find_winner()
+    print("Total AI wins: " + str(ai_score))
+    print("Total player wins: " + str(player_score))
+    print("To exit game press 0.")
+    print("")
+
+
+def  find_winner():
+    global ai_score
+    global player_score
+    player_win = False
+    if ai_choice == player_choice:
+        print("Go again")
+    elif ai_choice == 1 and player_choice == 2:
+        print("Paper beats rock")
+        player_win = True
+        player_score += 1
+    elif ai_choice == 1 and player_choice == 3:
+        print("Scissors loses to rock")
+        ai_score += 1
+    elif ai_choice == 2 and player_choice == 1:
+        print("Rock loses to paper")
+        ai_score += 1
+    elif ai_choice == 2 and player_choice == 3:
+        print("Scissors beats paper")
+        player_win = True
+        player_score += 1
+    elif ai_choice == 3 and player_choice == 1:
+        print("Rock beats scissors")
+        player_win = True
+        player_score += 1
+    elif ai_choice == 3 and player_choice == 2:
+        print("Paper loses to scissors")
+        ai_score += 1
+
+
+def convert_choice_to_string(choice):
+    if choice == 1:
+        return "rock"
+    elif choice == 2:
+        return "paper"
+    elif choice == 3:
+        return "scissors"
+
+print("Let's play rock-paper-scissors!")
+program_loop = True
+while program_loop:
+    play_game()
